@@ -19,9 +19,10 @@ public class Application {
 
     private static final List<Task> theTaskList = new LinkedList<>();
 
+    private static boolean shouldQuit = false;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        boolean shouldQuit = false;
         String input = "";
 
         System.out.println();
@@ -45,73 +46,88 @@ public class Application {
             }
 
             if (input.equals(COMMAND_ADD)) {
-
-                String description = "";
-
-                System.out.print("Enter description: ");
-
-                try {
-                    description = scanner.next();
-                } catch (InputMismatchException ex) {
-                    System.out.println(ex.getMessage());
-                }
-
-                Task userTask = new Task(description, false, "Low");
-
-                theTaskList.add(userTask);
-
-                Collections.sort(theTaskList);
-                Collections.reverse(theTaskList);
-
-                userToDoList.setToDoList(theTaskList);
-
-                printList();
+                handleAddCommand(scanner, userToDoList);
             } else if (input.equals(COMMAND_LIST)) {
-                printList();
+                handleListCommand();
             } else if (input.equals(COMMAND_SAVE)) {
-                String filePath = System.getProperty("user.dir") + "\\save\\toDoList.txt";
-
-                System.out.println(filePath);
-
-                File toDoFile = new File(filePath);
-
-                FileWriter fileWriter = null;
-
-                try {
-                    fileWriter = new FileWriter(toDoFile, true);
-                    PrintWriter printWriter = new PrintWriter(fileWriter);
-
-                    Iterator<Task> itr = userToDoList.getToDoList().iterator();
-
-                    int counter = 1;
-                    String listStringAccumulator = "";
-
-                    while (itr.hasNext()) {
-                        listStringAccumulator += counter + ": " + itr.next() + "\n";
-                        counter++;
-                    }
-
-                    LocalDate localDate = LocalDate.now();
-                    printWriter.println("----------------------------");
-                    printWriter.println("to-do-list: " + localDate);
-                    printWriter.println(listStringAccumulator);
-                    printWriter.println("");
-                    printWriter.println("");
-
-                    printWriter.close();
-                    fileWriter.close();
-
-                    System.out.println("File saved!");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                handleSaveCommand(userToDoList);
             } else if (input.equals(COMMAND_EXIT)) {
-                shouldQuit = true;
+                handleQuitCommand();
             }
         }
 
         System.out.println();
         System.out.println("Exiting...");
+    }
+
+    private static void handleQuitCommand() {
+        shouldQuit = true;
+    }
+
+    private static void handleListCommand() {
+        printList();
+    }
+
+    private static void handleSaveCommand(ToDoList userToDoList) {
+        String filePath = System.getProperty("user.dir") + "\\save\\toDoList.txt";
+
+        System.out.println(filePath);
+
+        File toDoFile = new File(filePath);
+
+        FileWriter fileWriter = null;
+
+        try {
+            fileWriter = new FileWriter(toDoFile, true);
+            PrintWriter printWriter = new PrintWriter(fileWriter);
+
+            Iterator<Task> itr = userToDoList.getToDoList().iterator();
+
+            int counter = 1;
+            String listStringAccumulator = "";
+
+            while (itr.hasNext()) {
+                listStringAccumulator += counter + ": " + itr.next() + "\n";
+                counter++;
+            }
+
+            LocalDate localDate = LocalDate.now();
+            printWriter.println("----------------------------");
+            printWriter.println("to-do-list: " + localDate);
+            printWriter.println(listStringAccumulator);
+            printWriter.println("");
+            printWriter.println("");
+
+            printWriter.close();
+            fileWriter.close();
+
+            System.out.println("File saved!");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private static void handleAddCommand(Scanner scanner, ToDoList userToDoList) {
+        String description = "";
+
+        System.out.print("Enter description: ");
+
+        try {
+            description = scanner.next();
+        } catch (InputMismatchException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        Task userTask = new Task(description, false, "Low");
+
+        theTaskList.add(userTask);
+
+        Collections.sort(theTaskList);
+        Collections.reverse(theTaskList);
+
+        userToDoList.setToDoList(theTaskList);
+
+        printList();
     }
 
     private static void printList() {
