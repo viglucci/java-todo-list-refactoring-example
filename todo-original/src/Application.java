@@ -17,6 +17,8 @@ public class Application {
     private static final String COMMAND_LIST = "list";
     private static final String COMMAND_SAVE = "save";
 
+    private static final List<Task> theTaskList = new LinkedList<>();
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean shouldQuit = false;
@@ -31,8 +33,6 @@ public class Application {
         System.out.println();
 
         ToDoList userToDoList = new ToDoList();
-
-        List<Task> theTaskList = new LinkedList<>();
 
         while (!shouldQuit) {
 
@@ -65,31 +65,9 @@ public class Application {
 
                 userToDoList.setToDoList(theTaskList);
 
-                Iterator<Task> itr = theTaskList.iterator();
-
-                int counter = 1;
-
-                String listSringAccumulator = "";
-
-                while (itr.hasNext()) {
-                    listSringAccumulator += counter + ": " + itr.next() + "\n";
-                    counter++;
-                }
-
-                System.out.print(listSringAccumulator);
+                printList();
             } else if (input.equals(COMMAND_LIST)) {
-                Iterator<Task> itr = theTaskList.iterator();
-
-                int counter = 1;
-
-                String listStringAccumulator = "";
-
-                while (itr.hasNext()) {
-                    listStringAccumulator += counter + ": " + itr.next() + "\n";
-                    counter++;
-                }
-
-                System.out.print(listStringAccumulator);
+                printList();
             } else if (input.equals(COMMAND_SAVE)) {
                 String filePath = System.getProperty("user.dir") + "\\save\\toDoList.txt";
 
@@ -134,5 +112,24 @@ public class Application {
 
         System.out.println();
         System.out.println("Exiting...");
+    }
+
+    private static void printList() {
+        Iterator<Task> itr = theTaskList.iterator();
+
+        int counter = 1;
+
+        StringBuilder output = new StringBuilder();
+
+        while (itr.hasNext()) {
+            output
+                .append(counter)
+                .append(": ")
+                .append(itr.next())
+                .append("\n");
+            counter++;
+        }
+
+        System.out.print(output);
     }
 }
