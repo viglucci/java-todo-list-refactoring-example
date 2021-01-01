@@ -44,14 +44,19 @@ public class Application {
                 System.out.println(ex.getMessage());
             }
 
-            if (input.equals(COMMAND_ADD)) {
-                handleAddCommand();
-            } else if (input.equals(COMMAND_LIST)) {
-                handleListCommand();
-            } else if (input.equals(COMMAND_SAVE)) {
-                handleSaveCommand();
-            } else if (input.equals(COMMAND_EXIT)) {
-                handleQuitCommand();
+            switch (input) {
+                case COMMAND_ADD:
+                    handleAddCommand();
+                    break;
+                case COMMAND_LIST:
+                    handleListCommand();
+                    break;
+                case COMMAND_SAVE:
+                    handleSaveCommand();
+                    break;
+                case COMMAND_EXIT:
+                    handleQuitCommand();
+                    break;
             }
         }
 
