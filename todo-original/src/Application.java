@@ -20,9 +20,10 @@ public class Application {
     private static final List<Task> theTaskList = new LinkedList<>();
 
     private static boolean shouldQuit = false;
+    private static ToDoList userToDoList = new ToDoList();
+    private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
         String input = "";
 
         System.out.println();
@@ -32,8 +33,6 @@ public class Application {
         System.out.println("- " + COMMAND_SAVE);
         System.out.println("- " + COMMAND_EXIT);
         System.out.println();
-
-        ToDoList userToDoList = new ToDoList();
 
         while (!shouldQuit) {
 
@@ -46,11 +45,11 @@ public class Application {
             }
 
             if (input.equals(COMMAND_ADD)) {
-                handleAddCommand(scanner, userToDoList);
+                handleAddCommand();
             } else if (input.equals(COMMAND_LIST)) {
                 handleListCommand();
             } else if (input.equals(COMMAND_SAVE)) {
-                handleSaveCommand(userToDoList);
+                handleSaveCommand();
             } else if (input.equals(COMMAND_EXIT)) {
                 handleQuitCommand();
             }
@@ -68,7 +67,7 @@ public class Application {
         printList();
     }
 
-    private static void handleSaveCommand(ToDoList userToDoList) {
+    private static void handleSaveCommand() {
         String filePath = System.getProperty("user.dir") + "\\save\\toDoList.txt";
 
         System.out.println(filePath);
@@ -107,7 +106,7 @@ public class Application {
         }
     }
 
-    private static void handleAddCommand(Scanner scanner, ToDoList userToDoList) {
+    private static void handleAddCommand() {
         String description = "";
 
         System.out.print("Enter description: ");
