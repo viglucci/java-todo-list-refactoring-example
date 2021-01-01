@@ -12,6 +12,11 @@ import java.util.Scanner;
 
 public class Application {
 
+    private static final String COMMAND_EXIT = "exit";
+    private static final String COMMAND_ADD = "add";
+    private static final String COMMAND_LIST = "list";
+    private static final String COMMAND_SAVE = "save";
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean shouldQuit = false;
@@ -19,10 +24,10 @@ public class Application {
 
         System.out.println();
         System.out.println("Commands:");
-        System.out.println("- exit");
-        System.out.println("- add");
-        System.out.println("- list");
-        System.out.println("- save");
+        System.out.println("- " + COMMAND_ADD);
+        System.out.println("- " + COMMAND_LIST);
+        System.out.println("- " + COMMAND_SAVE);
+        System.out.println("- " + COMMAND_EXIT);
         System.out.println();
 
         ToDoList userToDoList = new ToDoList();
@@ -39,7 +44,7 @@ public class Application {
                 System.out.println(ex.getMessage());
             }
 
-            if (input.equals("add")) {
+            if (input.equals(COMMAND_ADD)) {
 
                 String description = "";
 
@@ -53,10 +58,8 @@ public class Application {
 
                 Task userTask = new Task(description, false, "Low");
 
-                // Add to List
                 theTaskList.add(userTask);
 
-                // Sort, reverse
                 Collections.sort(theTaskList);
                 Collections.reverse(theTaskList);
 
@@ -74,7 +77,7 @@ public class Application {
                 }
 
                 System.out.print(listSringAccumulator);
-            } else if (input.equals("list")) {
+            } else if (input.equals(COMMAND_LIST)) {
                 Iterator<Task> itr = theTaskList.iterator();
 
                 int counter = 1;
@@ -87,7 +90,7 @@ public class Application {
                 }
 
                 System.out.print(listStringAccumulator);
-            } else if (input.equals("save")) {
+            } else if (input.equals(COMMAND_SAVE)) {
                 String filePath = System.getProperty("user.dir") + "\\save\\toDoList.txt";
 
                 System.out.println(filePath);
@@ -124,7 +127,7 @@ public class Application {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-            } else if (input.equals("exit")) {
+            } else if (input.equals(COMMAND_EXIT)) {
                 shouldQuit = true;
             }
         }
