@@ -16,6 +16,7 @@ public class Application {
     private static final String COMMAND_ADD = "add";
     private static final String COMMAND_LIST = "list";
     private static final String COMMAND_SAVE = "save";
+    private static final String COMMAND_HELP = "help";
 
     private static final List<Task> theTaskList = new LinkedList<>();
 
@@ -26,13 +27,7 @@ public class Application {
     public static void main(String[] args) {
         String input = "";
 
-        System.out.println();
-        System.out.println("Commands:");
-        System.out.println("- " + COMMAND_ADD);
-        System.out.println("- " + COMMAND_LIST);
-        System.out.println("- " + COMMAND_SAVE);
-        System.out.println("- " + COMMAND_EXIT);
-        System.out.println();
+        printHelpMenu();
 
         while (!shouldQuit) {
 
@@ -57,11 +52,37 @@ public class Application {
                 case COMMAND_EXIT:
                     handleQuitCommand();
                     break;
+                case COMMAND_HELP:
+                    handleHelpCommand();
+                    break;
+                default:
+                    handleUnsupportedCommand(input);
             }
         }
 
         System.out.println();
         System.out.println("Exiting...");
+    }
+
+    private static void printHelpMenu() {
+        System.out.println();
+        System.out.println("Commands:");
+        System.out.println("- " + COMMAND_ADD);
+        System.out.println("- " + COMMAND_LIST);
+        System.out.println("- " + COMMAND_SAVE);
+        System.out.println("- " + COMMAND_EXIT);
+        System.out.println("- " + COMMAND_HELP);
+        System.out.println();
+    }
+
+    private static void handleHelpCommand() {
+        printHelpMenu();
+    }
+
+    private static void handleUnsupportedCommand(String input) {
+        System.out.println();
+        System.out.println("Unknown command \"" + input + "\". Enter \"help\" to list available commands.");
+        System.out.println();
     }
 
     private static void handleQuitCommand() {
