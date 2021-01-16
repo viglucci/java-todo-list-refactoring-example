@@ -1,14 +1,7 @@
 
+# Refactoring Java for Beginners
 
-## Outline
+This code repository is supporting material for the ["Refactoring Java for Beginners"](https://www.youtube.com/playlist?list=PLJA9vp8T3Dd4hV07saio6GTrW9uXqHoJb) YouTube video series.
 
-### Refactors
-
-- duplicate code to methods
-- if/else to switch
-- objects should have behaviors
-- "magic" strings to fields
-- JSON & Jackson for save data
-
-### One
+Watch the video series and then reference the corresponding [pull requests](efactoring-example/pulls?q=is%3Apr+is%3Aclosed) to review the changes made during each video segment.
 
